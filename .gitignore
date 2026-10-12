@@ -1,0 +1,17 @@
+node_modules/
+dist/
+coverage/
+.data/
+.env
+.env.*
+*.log
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+INTERVIEW_EVIDENCE.md
+INTERVIEW_ASSESSMENT.md
+transcripts/
+.DS_Store
