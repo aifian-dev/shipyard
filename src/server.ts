@@ -1,14 +1,10 @@
-import { createServer, type Server } from "node:http";
+import Fastify from "fastify";
 
-export function createApp(): Server {
-  return createServer((request, response) => {
-    response.setHeader("Content-Type", "application/json");
-    if (request.method === "GET" && request.url === "/health") {
-      response.writeHead(200);
-      response.end(JSON.stringify({ status: "ok" }));
-      return;
-    }
-    response.writeHead(404);
-    response.end(JSON.stringify({ error: "not_found" }));
+export function createApp() {
+  const app = Fastify();
+  app.get("/health", async () => ({ status: "ok" }));
+  app.setNotFoundHandler(async (_request, reply) => {
+    return reply.code(404).send({ error: "not_found" });
   });
+  return app;
 }

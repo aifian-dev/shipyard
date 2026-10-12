@@ -15,3 +15,6 @@ INTERVIEW_EVIDENCE.md
 INTERVIEW_ASSESSMENT.md
 transcripts/
 .DS_Store
+HANDOFF.md
+.interview/
+.npmrc
