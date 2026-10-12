@@ -13,7 +13,7 @@ git clone https://github.com/aifian-dev/shipyard.git
 cd shipyard
 ```
 
-Complete these preflight checks before your scheduled interview clock starts. If pnpm is unavailable or its Corepack shim fails, use `npx --yes pnpm@12.11.2` in place of `pnpm` in each command below. The repository pins this pnpm version and includes its lockfile. npm is also supported through `npm ci`, `npm run check`, `npm test`, `npm start`, and `npm run handoff`.
+Complete these preflight checks before your scheduled interview clock starts. If pnpm is unavailable or its Corepack shim fails, use `npx --yes pnpm@12.11.2` in place of `pnpm` in each command below. The repository pins this pnpm version and includes its lockfile. npm is also supported through `npm ci`, `npm run check`, `npm test`, `npm start`, and `npm run handoff`. All pnpm scripts work identically with npm using `npm run <command>`.
 
 1. Install dependencies:
    ```bash
@@ -31,12 +31,47 @@ Complete these preflight checks before your scheduled interview clock starts. If
    ```bash
    pnpm start
    ```
-   The service listens on loopback `127.0.0.1:3000`. You can override the port by setting the `PORT` environment variable.
+   `pnpm start` runs the backend only. The service listens on loopback `127.0.0.1:3000`. You can override the port by setting the `PORT` environment variable.
 5. In another terminal, verify the server responds:
    ```bash
    curl http://127.0.0.1:3000/health
    ```
-6. Stop the server with `Ctrl+C`. During development, you can use `pnpm dev` if you prefer automatic reloads.
+6. Stop the server with `Ctrl+C`. During development, you can use `pnpm dev` to run the backend API and the UI console concurrently.
+
+## Optional API Console
+
+The repository includes an optional React and TypeScript developer console built with Vite. UI work is optional and ungraded.
+
+### Development Commands
+
+- `pnpm dev`: starts the backend API (`http://127.0.0.1:3000`) and the UI (`http://127.0.0.1:5173`) concurrently.
+- `pnpm dev:api`: starts only the backend with automatic reloads.
+- `pnpm dev:ui`: starts only the UI console. The backend must be running separately.
+- `pnpm start`: starts the backend only.
+
+All commands can be run via npm using `npm run <command>`.
+
+### Ports and Environment Variables
+
+- `PORT`: changes the backend API port and updates the Vite dev proxy target.
+- `UI_PORT`: changes the UI console port. `PORT` and `UI_PORT` must differ.
+
+### Builds
+
+- `pnpm build`: checks TypeScript types and builds the UI into `dist/ui`.
+- `pnpm build:ui`: builds only the UI into `dist/ui`.
+
+The build output in `dist/ui` is not automatically served by the backend.
+
+### Console Features
+
+The console provides a generic request client to inspect endpoints:
+
+- Supports HTTP methods, paths, JSON headers, and request bodies.
+- Displays response status, body, response time, and errors.
+- Starts prefilled with `GET /health`.
+- Relative paths only, proxied to `/api`.
+- Form input is held in memory and is not persisted to browser storage, so use test data.
 
 ## Interview Workflow
 
